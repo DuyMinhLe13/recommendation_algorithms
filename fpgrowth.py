@@ -1,6 +1,8 @@
 from csv import reader
 from itertools import chain, combinations
 from collections import defaultdict, OrderedDict
+from tqdm import tqdm
+
 class Node:
     def __init__(self, itemName, frequency, parentNode):
         self.itemName = itemName
@@ -20,7 +22,7 @@ class Node:
 def constructTree(itemSetList, frequency, minSup):
     headerTable = defaultdict(int)
     # Counting frequency and create header table
-    for idx, itemSet in enumerate(itemSetList):
+    for idx, itemSet in enumerate(tqdm(itemSetList)):
         for item in itemSet:
             headerTable[item] += frequency[idx]
 
@@ -36,7 +38,7 @@ def constructTree(itemSetList, frequency, minSup):
     # Init Null head node
     fpTree = Node('Null', 1, None)
     # Update FP tree for each cleaned and sorted itemSet
-    for idx, itemSet in enumerate(itemSetList):
+    for idx, itemSet in enumerate(tqdm(itemSetList)):
         itemSet = [item for item in itemSet if item in headerTable]
         itemSet.sort(key=lambda item: headerTable[item][0], reverse=True)
         # Traverse from root to leaf, update tree with given item
