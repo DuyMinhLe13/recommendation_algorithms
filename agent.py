@@ -37,7 +37,7 @@ class Agent():
         dataset = self.user_item_matrix[:num_users, :num_animes]
         self.itemSetList = []
         for user in tqdm(range(num_users)):
-            anime_lst = self.anime_index[np.where(dataset[user].toarray() > 0)[1]].tolist()
+            anime_lst = self.anime_index[dataset[user].nonzero()[1]].tolist()
             if len(anime_lst) > 0: self.itemSetList.append(anime_lst)
 
     def build_fpgrowth(self, minSup=0.19, minConf=0.5):
