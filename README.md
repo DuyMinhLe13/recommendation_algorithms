@@ -47,6 +47,15 @@ agent = Agent(dataset_path='dataset', weight_path='weight', download_dataset=Tru
 agent.build_itemSetList(num_users=20000, num_animes=1000)
 agent.build_fpgrowth(minSup=0.19, minConf=0.5)
 
+# Get all rules of FP-growth algorithm by id
+print(agent.rules_fpgrowth)
+
+# Get all rules of FP-growth algorithm by name
+for rule in agent.rules_fpgrowth:
+    print(agent.anime_df.loc[agent.anime_df['MAL_ID'].isin(list(rule[0]))]['Name'].tolist(), end=' ')
+    print('--->', end=' ')
+    print(agent.anime_df.loc[agent.anime_df['MAL_ID'].isin(list(rule[1]))]['Name'].tolist())
+
 # Get recommended animes using fp-growth algorithm by user_id, return id result
 agent.find_anime_for_user_using_fpgrowth(id=12)
 
