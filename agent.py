@@ -33,7 +33,7 @@ class Agent():
         self.anime_rating_embedding = scipy.sparse.load_npz(weight_path + '/anime_rating_embedding.npz')
         self.user_item_matrix = self.anime_rating_embedding.transpose()
 
-    def build_itemSetList(self, num_users=20000, num_animes=1000):
+    def build_itemSetList(self, num_users=313670, num_animes=17172):
         dataset = self.user_item_matrix[:num_users, :num_animes]
         nonzero_indices = dataset.nonzero()
         nonzero_indices = np.concatenate((nonzero_indices[0].reshape(1, -1), nonzero_indices[1].reshape(1, -1)), axis=0).transpose()
