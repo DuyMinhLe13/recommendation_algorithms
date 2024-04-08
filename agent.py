@@ -19,7 +19,7 @@ class Agent():
             os.mkdir(weight_path)
             gdown.download('https://drive.google.com/uc?id=1guGze0nCE8i0JPOzlToW_CzBQhUk_2-x', weight_path + '/weight.npy', quiet=False)
             gdown.download('https://drive.google.com/uc?id=1a2V11vnThZjZrdfj9t7xXCPL65MyeK6h', weight_path + '/anime_index.npy', quiet=False)
-            gdown.download('https://drive.google.com/uc?id=1Yv0tLcOd-vIUdoBXcUMQ7wSuj54BDJgO', weight_path + '/episode_embedding.npy', quiet=False)
+            gdown.download('https://drive.google.com/uc?id=1Yv0tLcOd-vIUdoBXcUMQ7wSuj54BDJgO', weight_path + '/episode_embedding.npz', quiet=False)
             gdown.download('https://drive.google.com/uc?id=1pmuTUqkL5fg1IypXmMfg02Ag3u_62m6c', weight_path + '/user_index.npy', quiet=False)
             gdown.download('https://drive.google.com/uc?id=1--EsQPyxLqg_uvN2TzgSpGl6QiRqlB3y', weight_path + '/anime_rating_embedding.npz', quiet=False)
 
@@ -28,7 +28,7 @@ class Agent():
         self.anime_df = pd.read_csv(dataset_path + '/anime.csv')
         self.anime_df = self.anime_df.loc[self.anime_df['MAL_ID'].isin(self.anime_index)]
         self.anime_df = self.anime_df.sort_values(by=['MAL_ID'])
-        self.episode_embedding = scipy.sparse.load_npz(weight_path + '/episode_embedding.npy')
+        self.episode_embedding = scipy.sparse.load_npz(weight_path + '/episode_embedding.npz')
         self.user_index = np.load(weight_path + '/user_index.npy')
         self.anime_rating_embedding = scipy.sparse.load_npz(weight_path + '/anime_rating_embedding.npz')
         self.user_item_matrix = self.anime_rating_embedding.transpose()
