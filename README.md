@@ -8,6 +8,7 @@
 * `zipfile`
 
 # Usage
+## Collaborative Filtering
 ```python
 from agent import Agent
 agent = Agent(dataset_path='dataset', weight_path='weight', download_dataset=True, download_weight=True)
@@ -38,6 +39,22 @@ print(agent.find_anime_for_user_using_rating(id=0, top_k=5, num_animes=4, return
 
 # Get top_k * num_animes recommend_animes using rating attribute by user_id, return DataFrame result
 print(agent.find_anime_for_user_using_rating(id=0, top_k=5, num_animes=4))
+```
+## FP-growth
+```python
+from agent import Agent
+agent = Agent(dataset_path='dataset', weight_path='weight', download_dataset=True, download_weight=True)
+agent.build_itemSetList(num_users=20000, num_animes=1000)
+agent.build_fpgrowth(minSup=0.19, minConf=0.5)
+
+# Get recommended animes using fp-growth algorithm by user_id, return id result
+agent.find_anime_for_user_using_fpgrowth(id=12)
+
+# Get recommended animes using fp-growth algorithm by user_id, return name result
+agent.find_anime_for_user_using_fpgrowth(id=12, return_name=True)
+
+# Get recommended animes using fp-growth algorithm by user_id, return DataFrame result
+agent.find_anime_for_user_using_fpgrowth(id=12, return_df=True)
 ```
 
 # Algorithm Tutorial
