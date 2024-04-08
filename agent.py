@@ -32,13 +32,13 @@ class Agent():
         self.user_index = np.load(weight_path + '/user_index.npy')
         self.anime_rating_embedding = scipy.sparse.load_npz(weight_path + '/anime_rating_embedding.npz')
         self.user_item_matrix = self.anime_rating_embedding.transpose()
-    
+
     def build_itemSetList(self, num_users=20000, num_animes=1000):
         dataset = self.user_item_matrix[:num_users, :num_animes]
-        self.itemSetList = []
-        for user in tqdm(range(num_users)):
-            anime_lst = self.anime_index[dataset[user].nonzero()[1]].tolist()
-            if len(anime_lst) > 0: self.itemSetList.append(anime_lst)
+        nonzero_indices = dataset.nonzero()
+        nonzero_indices = np.concatenate((nonzero_indices[0].reshape(1, -1), nonzero_indices[1].reshape(1, -1)), axis=0).transpose()
+        self.itemSetList = np.split(nonzero_indices[:,1], np.unique(nonzero_indices[:, 0], return_index=True)[1][1:])
+        self.itemSetList = list(map(lambda x: x.tolist(), self.itemSetList))
 
     def build_fpgrowth(self, minSup=0.19, minConf=0.5):
         self.freqItemSet_fpgrowth, self.rules_fpgrowth = fpgrowth(self.itemSetList, minSupRatio=minSup, minConf=minConf)
