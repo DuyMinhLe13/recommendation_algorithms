@@ -41,6 +41,11 @@ print(agent.find_anime_for_user_using_rating(id=0, top_k=5, num_animes=4, return
 print(agent.find_anime_for_user_using_rating(id=0, top_k=5, num_animes=4))
 ```
 ## FP-growth
+
+<p align=center>
+    <img src="assets/fpgrowth.png" width="702" height="455">
+</p>
+
 ```python
 from agent import Agent
 agent = Agent(dataset_path='dataset', weight_path='weight', download_dataset=True, download_weight=True)
