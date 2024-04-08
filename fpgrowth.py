@@ -17,19 +17,6 @@ class Node:
         for child in list(self.children.values()):
             child.display(ind+1)
 
-def getFromFile(fname):
-    itemSetList = []
-    frequency = []
-
-    with open(fname, 'r') as file:
-        csv_reader = reader(file)
-        for line in csv_reader:
-            line = list(filter(None, line))
-            itemSetList.append(line)
-            frequency.append(1)
-
-    return itemSetList, frequency
-
 def constructTree(itemSetList, frequency, minSup):
     headerTable = defaultdict(int)
     # Counting frequency and create header table
