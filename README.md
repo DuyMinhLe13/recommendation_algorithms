@@ -62,7 +62,8 @@ print(agent.rules_fpgrowth)
 for rule in agent.rules_fpgrowth:
     print(agent.anime_df.loc[agent.anime_df['MAL_ID'].isin(list(rule[0]))]['Name'].tolist(), end=' ')
     print('--->', end=' ')
-    print(agent.anime_df.loc[agent.anime_df['MAL_ID'].isin(list(rule[1]))]['Name'].tolist())
+    print(agent.anime_df.loc[agent.anime_df['MAL_ID'].isin(list(rule[1]))]['Name'].tolist(), end=' ')
+    print(rule[2])
 
 # Get recommended animes using fp-growth algorithm by user_id, return id result
 agent.find_anime_for_user_using_fpgrowth(id=12)
