@@ -53,7 +53,7 @@ print(agent.find_anime_for_user_using_rating(id=0, top_k=5, num_animes=4))
 ```python
 from agent import Agent
 agent = Agent(dataset_path='dataset', weight_path='weight', download_dataset=True, download_weight=True)
-agent.build_itemSetList(num_users=20000, num_animes=1000)
+agent.build_itemSetList(num_users=20000, num_animes=1000) # max num_users=313670, num_animes=17172
 agent.build_fpgrowth(minSup=0.12, minConf=0.5)
 
 # Get all rules of FP-growth algorithm by id
