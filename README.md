@@ -67,13 +67,13 @@ for rule in agent.rules_fpgrowth:
     print(rule[2])
 
 # Get recommended animes using fp-growth algorithm by user_id, return id result
-agent.find_anime_for_user_using_fpgrowth(id=12)
+print(agent.find_anime_for_user_using_fpgrowth(id=12))
 
 # Get recommended animes using fp-growth algorithm by user_id, return name result
-agent.find_anime_for_user_using_fpgrowth(id=12, return_name=True)
+print(agent.find_anime_for_user_using_fpgrowth(id=12, return_name=True))
 
 # Get recommended animes using fp-growth algorithm by user_id, return DataFrame result
-agent.find_anime_for_user_using_fpgrowth(id=12, return_df=True)
+print(agent.find_anime_for_user_using_fpgrowth(id=12, return_df=True))
 ```
 
 # Algorithm Tutorial
