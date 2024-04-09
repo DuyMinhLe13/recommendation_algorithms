@@ -38,7 +38,7 @@ class Agent():
         self.itemSetList = np.split(nonzero_indices[:,1], np.unique(nonzero_indices[:, 0], return_index=True)[1][1:])
         self.itemSetList = list(map(lambda x: self.anime_index[x].tolist(), self.itemSetList))
 
-    def build_fpgrowth(self, minSup=0.19, minConf=0.5):
+    def build_fpgrowth(self, minSup=0.12, minConf=0.5):
         self.freqItemSet_fpgrowth, self.rules_fpgrowth = fpgrowth(self.itemSetList, minSupRatio=minSup, minConf=minConf)
 
     def find_similar_animes(self, id: int = None, name: str = None, k=10, return_df=False):
