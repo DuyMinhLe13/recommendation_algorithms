@@ -4,6 +4,7 @@ import scipy
 import os
 import zipfile
 from tqdm import tqdm
+from functools import cmp_to_key
 from fpgrowth import fpgrowth
 
 import os
@@ -40,6 +41,7 @@ class Agent():
 
     def build_fpgrowth(self, minSup=0.12, minConf=0.5):
         self.freqItemSet_fpgrowth, self.rules_fpgrowth = fpgrowth(self.itemSetList, minSupRatio=minSup, minConf=minConf)
+        self.rules_fpgrowth = sorted(self.rules_fpgrowth, key=cmp_to_key(lambda item1, item2: item2[2] - item1[2]))
 
     def find_similar_animes(self, id: int = None, name: str = None, k=10, return_df=False):
         if isinstance(id, int):
