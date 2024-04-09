@@ -6,6 +6,9 @@
 * `pandas`
 * `os`
 * `zipfile`
+* `tqdm`
+* `itertools`
+* `collections`
 
 # Usage
 ## Collaborative Filtering
