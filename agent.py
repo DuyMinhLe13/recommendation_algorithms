@@ -2,26 +2,24 @@ import numpy as np
 import pandas as pd
 import scipy
 import os
-import gdown
 import zipfile
 from tqdm import tqdm
 from fpgrowth import fpgrowth
+
+import os
+os.environ['KAGGLE_USERNAME'] = "minhduyl"
+os.environ['KAGGLE_KEY'] = "13b464371b84cde3768570bd8d15e1a6"
+import kaggle
+kaggle.api.authenticate()
 
 class Agent():
     def __init__(self, dataset_path='dataset', weight_path='weight', download_dataset=True, download_weight=True):
 
         if not os.path.exists(dataset_path) and download_dataset:
-            gdown.download('https://drive.google.com/uc?id=1UPHCJPnJ3DyN4exFDKo2R2_mWclRpuWx', 'dataset.zip', quiet=False)
-            with zipfile.ZipFile('dataset.zip', 'r') as zip_ref:
-                zip_ref.extractall(dataset_path)
+            kaggle.api.dataset_download_files('hernan4444/anime-recommendation-database-2020', path=dataset_path, unzip=True, quiet=False)
 
         if not os.path.exists(weight_path) and download_weight:
-            os.mkdir(weight_path)
-            gdown.download('https://drive.google.com/uc?id=1guGze0nCE8i0JPOzlToW_CzBQhUk_2-x', weight_path + '/weight.npy', quiet=False)
-            gdown.download('https://drive.google.com/uc?id=1a2V11vnThZjZrdfj9t7xXCPL65MyeK6h', weight_path + '/anime_index.npy', quiet=False)
-            gdown.download('https://drive.google.com/uc?id=1Yv0tLcOd-vIUdoBXcUMQ7wSuj54BDJgO', weight_path + '/episode_embedding.npz', quiet=False)
-            gdown.download('https://drive.google.com/uc?id=1pmuTUqkL5fg1IypXmMfg02Ag3u_62m6c', weight_path + '/user_index.npy', quiet=False)
-            gdown.download('https://drive.google.com/uc?id=1--EsQPyxLqg_uvN2TzgSpGl6QiRqlB3y', weight_path + '/anime_rating_embedding.npz', quiet=False)
+            kaggle.api.dataset_download_files('duyminhle/anime-recommendation-system-weight', path=weight_path, unzip=True, quiet=False)
 
         self.weight = np.load(weight_path + '/weight.npy')
         self.anime_index = np.load(weight_path + '/anime_index.npy')
