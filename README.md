@@ -9,6 +9,7 @@
 * `tqdm`
 * `itertools`
 * `collections`
+* `functools`
 
 # Usage
 ## Collaborative Filtering
