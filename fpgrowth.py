@@ -124,9 +124,10 @@ def getSupport(testSet, itemSetList):
 
 def associationRule(freqItemSet, itemSetList, minConf):
     rules = []
-    for itemSet in freqItemSet:
+    for itemSet in tqdm(freqItemSet):
         subsets = powerset(itemSet)
         itemSetSup = getSupport(itemSet, itemSetList)
+        if itemSetSup <= minConf: continue
         for s in subsets:
             confidence = float(itemSetSup / getSupport(s, itemSetList))
             if(confidence > minConf):
