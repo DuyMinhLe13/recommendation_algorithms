@@ -83,3 +83,6 @@ print(agent.find_anime_for_user_using_fpgrowth(id=12, return_df=True))
 [![Kaggle](https://img.shields.io/badge/Kaggle-035a7d?style=for-the-badge&logo=kaggle&logoColor=white)](https://www.kaggle.com/datasets/hernan4444/anime-recommendation-database-2020)
 ## Cropped dataset
 [![Google Drive](https://img.shields.io/badge/Google%20Drive-4285F4?style=for-the-badge&logo=googledrive&logoColor=white)](https://drive.google.com/drive/folders/1CYjnad4Qmc5wx9BpXKcbHMbHE18iQNOa?usp=sharing)
+
+# Evaluation metrics
+[F1@K](https://neptune.ai/blog/recommender-systems-metrics)
