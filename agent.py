@@ -37,7 +37,7 @@ class Agent():
         nonzero_indices = dataset.nonzero()
         nonzero_indices = np.concatenate((nonzero_indices[0].reshape(1, -1), nonzero_indices[1].reshape(1, -1)), axis=0).transpose()
         self.itemSetList = np.split(nonzero_indices[:,1], np.unique(nonzero_indices[:, 0], return_index=True)[1][1:])
-        self.itemSetList = list(map(lambda x: self.anime_index[x].tolist(), self.itemSetList))
+        self.itemSetList = sorted(list(map(lambda x: self.anime_index[x].tolist(), self.itemSetList)), key=cmp_to_key(lambda item1, item2: len(item2) - len(item1)))
 
     def build_fpgrowth(self, minSup=0.12, minConf=0.5):
         self.freqItemSet_fpgrowth, self.rules_fpgrowth = fpgrowth(self.itemSetList, minSupRatio=minSup, minConf=minConf)
