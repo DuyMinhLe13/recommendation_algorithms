@@ -33,6 +33,13 @@ class Agent():
         self.user_item_matrix = self.anime_rating_embedding.transpose()
 
     def build_itemSetList(self, num_users=20000, num_animes=1000):
+        dataset = self.user_item_matrix[:num_users, :num_animes]
+        nonzero_indices = dataset.nonzero()
+        nonzero_indices = np.concatenate((nonzero_indices[0].reshape(1, -1), nonzero_indices[1].reshape(1, -1)), axis=0).transpose()
+        self.itemSetList = np.split(nonzero_indices[:,1], np.unique(nonzero_indices[:, 0], return_index=True)[1][1:])
+        self.itemSetList = list(map(lambda x: self.anime_index[x].tolist(), self.itemSetList))
+
+    def build_itemSetList_sorted(self, num_users=20000, num_animes=1000):
         dataset = self.user_item_matrix[:, :num_animes]
         nonzero_indices = dataset.nonzero()
         nonzero_indices = np.concatenate((nonzero_indices[0].reshape(1, -1), nonzero_indices[1].reshape(1, -1)), axis=0).transpose()
