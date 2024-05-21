@@ -4,7 +4,6 @@ import pandas as pd
 from copy import deepcopy
 from itertools import combinations, product
 from collections import defaultdict, Counter
-from mlxtend.preprocessing import TransactionEncoder
 
 class TreeNode:
     """
