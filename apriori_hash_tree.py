@@ -75,7 +75,6 @@ class HashTree:
         """
         if node.isleaf:
             for itemset, cnt in node.bucket.items():
-                print("item set:", itemset, "count:", cnt)
                 if cnt >= support:
                     result_list.append(itemset)
                     count_list.append(cnt)
