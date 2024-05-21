@@ -6,6 +6,9 @@ import zipfile
 from tqdm import tqdm
 from functools import cmp_to_key
 from fpgrowth import fpgrowth
+from fpgrowth import associationRule
+from mlxtend.preprocessing import TransactionEncoder
+from apriori_hash_tree import apriori_student
 
 import os
 os.environ['KAGGLE_USERNAME'] = "minhduyl"
@@ -49,6 +52,14 @@ class Agent():
     def build_fpgrowth(self, minSup=0.12, minConf=0.5):
         self.freqItemSet_fpgrowth, self.rules_fpgrowth = fpgrowth(self.itemSetList, minSupRatio=minSup, minConf=minConf)
         self.rules_fpgrowth = sorted(self.rules_fpgrowth, key=cmp_to_key(lambda item1, item2: item2[2] - item1[2]))
+
+    def build_apriori_hash_tree(self, minSup=0.12, minConf=0.5):
+        te = TransactionEncoder()
+        te_array = te.fit_transform(self.itemSetList, sparse=True)
+        sparse_df = pd.DataFrame.sparse.from_spmatrix(te_array, columns=te.columns_)
+        frequent_itemsets = apriori_student(sparse_df, self.itemSetList, te_array, min_support=minSup)
+        self.freqItemSet_apriori_hash_tree = [set(i) for i in list(frequent_itemsets['itemsets'])]
+        self.rules_fpgrowth = associationRule(self.freqItemSet_apriori_hash_tree, self.itemSetList, minConf)
 
     def find_similar_animes(self, id: int = None, name: str = None, k=10, return_df=False):
         if isinstance(id, int):
