@@ -59,10 +59,14 @@ class Agent():
         te = TransactionEncoder()
         te_array = te.fit_transform(self.itemSetList, sparse=True)
         sparse_df = pd.DataFrame.sparse.from_spmatrix(te_array, columns=te.columns_)
-        frequent_itemsets = apriori_student(sparse_df, self.itemSetList, te_array, min_support=minSup)
-        self.freqItemSet_apriori_hash_tree = [set(i) for i in list(frequent_itemsets['itemsets'])]
-        self.rules_apriori_hash_tree = associationRule(self.freqItemSet_apriori_hash_tree, self.itemSetList, minConf)
-        self.rules_apriori_hash_tree = sorted(self.rules_apriori_hash_tree, key=cmp_to_key(lambda item1, item2: item2[2] - item1[2]))
+        try:
+            frequent_itemsets = apriori_student(sparse_df, self.itemSetList, te_array, min_support=minSup)
+            self.freqItemSet_apriori_hash_tree = [set(i) for i in list(frequent_itemsets['itemsets'])]
+            self.rules_apriori_hash_tree = associationRule(self.freqItemSet_apriori_hash_tree, self.itemSetList, minConf)
+            self.rules_apriori_hash_tree = sorted(self.rules_apriori_hash_tree, key=cmp_to_key(lambda item1, item2: item2[2] - item1[2]))
+        except:
+            self.freqItemSet_apriori_hash_tree = []
+            self.rules_apriori_hash_tree = []
 
     def build_apriori(self, minSup=0.12, minConf=0.5):
         self.freqItemSet_apriori, rules_apriori = runApriori(self.itemSetList, minSup, minConf)
