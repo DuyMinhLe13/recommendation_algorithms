@@ -1,7 +1,9 @@
 from itertools import chain, combinations
 from collections import defaultdict, OrderedDict
 from tqdm import tqdm
+import bigtree
 
+global viz_tree_dict
 class Node:
     def __init__(self, itemName, frequency, parentNode):
         self.itemName = itemName
@@ -9,6 +11,7 @@ class Node:
         self.parent = parentNode
         self.children = {}
         self.next = None
+        self.path = 'Null'
 
     def increment(self, frequency):
         self.count += frequency
@@ -18,6 +21,19 @@ class Node:
         for child in list(self.children.values()):
             print('-' * ind, 'parent:', self.itemName)
             child.display(ind+1)
+    def visualize(self):
+        global viz_tree_dict
+        for child in list(self.children.values()):
+            if self.itemName != child.itemName:
+                path = self.path + '/' + str(child.itemName)
+            else:
+                path = self.path
+            child.path = path
+            if path not in viz_tree_dict.keys():
+                viz_tree_dict[path] = {'count': child.count}
+            else:
+                viz_tree_dict[path]['count'] += child.count
+            child.visualize()
 
 def constructTree(itemSetList, frequency, minSup):
     headerTable = defaultdict(int)
@@ -139,13 +155,19 @@ def getFrequencyFromList(itemSetList):
     frequency = [1 for i in range(len(itemSetList))]
     return frequency
 
-def fpgrowth(itemSetList, minSupRatio, minConf):
+
+def fpgrowth(itemSetList, minSupRatio, minConf, visualize=False):
+    global viz_tree_dict
+    viz_tree_dict = dict()
     frequency = getFrequencyFromList(itemSetList)
     minSup = len(itemSetList) * minSupRatio
     fpTree, headerTable = constructTree(itemSetList, frequency, minSup)
     if(fpTree == None):
         print('No frequent item set')
     else:
+        fpTree.visualize()
+        if visualize:
+            bigtree.dict_to_tree(viz_tree_dict).show(attr_list=['count'])
         freqItems = []
         mineTree(headerTable, minSup, set(), freqItems)
         rules = associationRule(freqItems, itemSetList, minConf)
