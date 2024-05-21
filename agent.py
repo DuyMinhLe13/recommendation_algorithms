@@ -59,7 +59,7 @@ class Agent():
         sparse_df = pd.DataFrame.sparse.from_spmatrix(te_array, columns=te.columns_)
         frequent_itemsets = apriori_student(sparse_df, self.itemSetList, te_array, min_support=minSup)
         self.freqItemSet_apriori_hash_tree = [set(i) for i in list(frequent_itemsets['itemsets'])]
-        self.rules_fpgrowth = associationRule(self.freqItemSet_apriori_hash_tree, self.itemSetList, minConf)
+        self.rules_apriori_hash_tree = associationRule(self.freqItemSet_apriori_hash_tree, self.itemSetList, minConf)
 
     def find_similar_animes(self, id: int = None, name: str = None, k=10, return_df=False):
         if isinstance(id, int):
