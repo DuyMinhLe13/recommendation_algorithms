@@ -14,8 +14,9 @@ class Node:
         self.count += frequency
 
     def display(self, ind=1):
-        print('  ' * ind, self.itemName, ' ', self.count)
+        print('-' * ind, self.itemName, ' ', self.count)
         for child in list(self.children.values()):
+            print('-' * ind, 'parent:', self.itemName)
             child.display(ind+1)
 
 def constructTree(itemSetList, frequency, minSup):
