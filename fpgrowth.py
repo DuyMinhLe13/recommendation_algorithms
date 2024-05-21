@@ -156,7 +156,7 @@ def getFrequencyFromList(itemSetList):
     return frequency
 
 
-def fpgrowth(itemSetList, minSupRatio, minConf, visualize=False):
+def fpgrowth(itemSetList, minSupRatio, minConf, visualize=False, generate_rule=True):
     global viz_tree_dict
     viz_tree_dict = dict()
     frequency = getFrequencyFromList(itemSetList)
@@ -170,5 +170,7 @@ def fpgrowth(itemSetList, minSupRatio, minConf, visualize=False):
             bigtree.dict_to_tree(viz_tree_dict).show(attr_list=['count'])
         freqItems = []
         mineTree(headerTable, minSup, set(), freqItems)
-        rules = associationRule(freqItems, itemSetList, minConf)
+        if generate_rule:
+            rules = associationRule(freqItems, itemSetList, minConf)
+        else: rules=[]
         return freqItems, rules
