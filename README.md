@@ -60,6 +60,7 @@ for rule in agent.rules_fpgrowth:
 ```
 Custom dataset
 ```python
+from agent import Agent
 agent = Agent(custom_dataset=True)
 agent.itemSetList = [
         ['M', 'O', 'N', 'K', 'E', 'Y'],
