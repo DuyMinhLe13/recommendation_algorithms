@@ -87,22 +87,4 @@ def runApriori(data_iter, minSupport, minConfidence):
                                            confidence))
     return toRetItems, toRetRules
 
-def printResults(items, rules):
-    """prints the generated itemsets sorted by support and the confidence rules sorted by confidence"""
-    for item, support in sorted(items, key=lambda item_support: item_support[1]):
-        print("itemset: %s , %.3f" % (str(item), support))
-    print(len(items))
-    print("\n------------------------ RULES:")
-    for rule, confidence in sorted(rules, key=lambda rule_confidence: rule_confidence[1]):
-        pre, post = rule
-        print("Rule: %s ==> %s , %.3f" % (str(pre), str(post), confidence))
-    print(len(rules))
-
-def dataFromFile(fname):
-    """Function which reads from the file and yields a generator"""
-    file_iter = open(fname, 'r', encoding='utf8')
-    for line in file_iter:
-        line = line.strip().rstrip(',')                         # Remove trailing comma
-        record = frozenset(line.split(','))
-        yield record
 
