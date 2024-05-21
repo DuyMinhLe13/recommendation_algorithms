@@ -68,12 +68,10 @@ agent.itemSetList = [
         ['C', 'O', 'O', 'K', 'I', 'E']
     ]
 agent.build_apriori_hash_tree(minSup=0.6, minConf=0.8)
-# Get all rules of FP-growth algorithm by name
-for rule in agent.rules_fpgrowth:
-    print(agent.anime_df.loc[agent.anime_df['MAL_ID'].isin(list(rule[0]))]['Name'].tolist(), end=' ')
-    print('--->', end=' ')
-    print(agent.anime_df.loc[agent.anime_df['MAL_ID'].isin(list(rule[1]))]['Name'].tolist(), end=' ')
-    print(rule[2])
+for i in agent.freqItemSet_apriori_hash_tree:
+    print(i)
+for i in agent.rules_apriori_hash_tree:
+    print(i)
 ```
 
 ## FP-growth
