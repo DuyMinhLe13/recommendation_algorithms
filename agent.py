@@ -60,6 +60,7 @@ class Agent():
         frequent_itemsets = apriori_student(sparse_df, self.itemSetList, te_array, min_support=minSup)
         self.freqItemSet_apriori_hash_tree = [set(i) for i in list(frequent_itemsets['itemsets'])]
         self.rules_apriori_hash_tree = associationRule(self.freqItemSet_apriori_hash_tree, self.itemSetList, minConf)
+        self.rules_apriori_hash_tree = sorted(self.rules_apriori_hash_tree, key=cmp_to_key(lambda item1, item2: item2[2] - item1[2]))
 
     def find_similar_animes(self, id: int = None, name: str = None, k=10, return_df=False):
         if isinstance(id, int):
