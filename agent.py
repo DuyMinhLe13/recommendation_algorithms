@@ -51,8 +51,8 @@ class Agent():
         self.itemSetList = np.split(nonzero_indices[:,1], np.unique(nonzero_indices[:, 0], return_index=True)[1][1:])
         self.itemSetList = sorted(list(map(lambda x: self.anime_index[x].tolist(), self.itemSetList)), key=cmp_to_key(lambda item1, item2: len(item2) - len(item1)))[:num_users]
 
-    def build_fpgrowth(self, minSup=0.12, minConf=0.5):
-        self.freqItemSet_fpgrowth, self.rules_fpgrowth = fpgrowth(self.itemSetList, minSupRatio=minSup, minConf=minConf)
+    def build_fpgrowth(self, minSup=0.12, minConf=0.5, visualize=False):
+        self.freqItemSet_fpgrowth, self.rules_fpgrowth = fpgrowth(self.itemSetList, minSupRatio=minSup, minConf=minConf, visualize=visualize)
         self.rules_fpgrowth = sorted(self.rules_fpgrowth, key=cmp_to_key(lambda item1, item2: item2[2] - item1[2]))
 
     def build_apriori_hash_tree(self, minSup=0.12, minConf=0.5):
@@ -73,6 +73,7 @@ class Agent():
             data.append(set(i[0][1]))
             data.append(i[1])
             self.rules_apriori.append(data)
+        self.rules_apriori = sorted(self.rules_apriori, key=cmp_to_key(lambda item1, item2: item2[2] - item1[2]))
 
     def find_similar_animes(self, id: int = None, name: str = None, k=10, return_df=False):
         if isinstance(id, int):
