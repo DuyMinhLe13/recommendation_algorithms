@@ -9,6 +9,7 @@ from fpgrowth import fpgrowth
 from fpgrowth import associationRule
 from mlxtend.preprocessing import TransactionEncoder
 from apriori_hash_tree import apriori_student
+from apriori import runApriori
 
 import os
 os.environ['KAGGLE_USERNAME'] = "minhduyl"
@@ -62,6 +63,16 @@ class Agent():
         self.freqItemSet_apriori_hash_tree = [set(i) for i in list(frequent_itemsets['itemsets'])]
         self.rules_apriori_hash_tree = associationRule(self.freqItemSet_apriori_hash_tree, self.itemSetList, minConf)
         self.rules_apriori_hash_tree = sorted(self.rules_apriori_hash_tree, key=cmp_to_key(lambda item1, item2: item2[2] - item1[2]))
+
+    def build_apriori(self, minSup=0.12, minConf=0.5):
+        self.freqItemSet_apriori, rules_apriori = runApriori(self.itemSetList, minSup, minConf)
+        self.rules_apriori = []
+        for i in rules_apriori:
+            data = []
+            data.append(set(i[0][0]))
+            data.append(set(i[0][1]))
+            data.append(i[1])
+            self.rules_apriori.append(data)
 
     def find_similar_animes(self, id: int = None, name: str = None, k=10, return_df=False):
         if isinstance(id, int):
