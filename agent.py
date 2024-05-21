@@ -17,23 +17,24 @@ import kaggle
 kaggle.api.authenticate()
 
 class Agent():
-    def __init__(self, dataset_path='dataset', weight_path='weight', download_dataset=True, download_weight=True):
-
-        if not os.path.exists(dataset_path) and download_dataset:
-            kaggle.api.dataset_download_files('hernan4444/anime-recommendation-database-2020', path=dataset_path, unzip=True, quiet=False)
-
-        if not os.path.exists(weight_path) and download_weight:
-            kaggle.api.dataset_download_files('duyminhle/anime-recommendation-system-weight', path=weight_path, unzip=True, quiet=False)
-
-        self.weight = np.load(weight_path + '/weight.npy')
-        self.anime_index = np.load(weight_path + '/anime_index.npy')
-        self.anime_df = pd.read_csv(dataset_path + '/anime.csv')
-        self.anime_df = self.anime_df.loc[self.anime_df['MAL_ID'].isin(self.anime_index)]
-        self.anime_df = self.anime_df.sort_values(by=['MAL_ID'])
-        self.episode_embedding = scipy.sparse.load_npz(weight_path + '/episode_embedding.npz')
-        self.user_index = np.load(weight_path + '/user_index.npy')
-        self.anime_rating_embedding = scipy.sparse.load_npz(weight_path + '/anime_rating_embedding.npz')
-        self.user_item_matrix = self.anime_rating_embedding.transpose()
+    def __init__(self, dataset_path='dataset', weight_path='weight', download_dataset=True, download_weight=True, custom_dataset=False):
+        
+        if not custom_dataset:
+            if not os.path.exists(dataset_path) and download_dataset:
+                kaggle.api.dataset_download_files('hernan4444/anime-recommendation-database-2020', path=dataset_path, unzip=True, quiet=False)
+    
+            if not os.path.exists(weight_path) and download_weight:
+                kaggle.api.dataset_download_files('duyminhle/anime-recommendation-system-weight', path=weight_path, unzip=True, quiet=False)
+    
+            self.weight = np.load(weight_path + '/weight.npy')
+            self.anime_index = np.load(weight_path + '/anime_index.npy')
+            self.anime_df = pd.read_csv(dataset_path + '/anime.csv')
+            self.anime_df = self.anime_df.loc[self.anime_df['MAL_ID'].isin(self.anime_index)]
+            self.anime_df = self.anime_df.sort_values(by=['MAL_ID'])
+            self.episode_embedding = scipy.sparse.load_npz(weight_path + '/episode_embedding.npz')
+            self.user_index = np.load(weight_path + '/user_index.npy')
+            self.anime_rating_embedding = scipy.sparse.load_npz(weight_path + '/anime_rating_embedding.npz')
+            self.user_item_matrix = self.anime_rating_embedding.transpose()
 
     def build_itemSetList(self, num_users=20000, num_animes=1000):
         dataset = self.user_item_matrix[:num_users, :num_animes]
