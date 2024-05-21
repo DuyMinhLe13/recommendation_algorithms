@@ -265,7 +265,7 @@ def apriori_student(df, dataset, te_array, min_support=0.6):
         n_can = len(candidates)
 
         k += 1
-        htree = HashTree(max_leaf_size=n_can, hash_num=n_can)
+        htree = HashTree(max_leaf_size=n_can, hash_num=k)
         htree.build_tree(candidates)
         for idx, tran in enumerate(transactions):
             if len(tran) < k:
