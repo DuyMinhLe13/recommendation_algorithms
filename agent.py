@@ -51,8 +51,8 @@ class Agent():
         self.itemSetList = np.split(nonzero_indices[:,1], np.unique(nonzero_indices[:, 0], return_index=True)[1][1:])
         self.itemSetList = sorted(list(map(lambda x: self.anime_index[x].tolist(), self.itemSetList)), key=cmp_to_key(lambda item1, item2: len(item2) - len(item1)))[:num_users]
 
-    def build_fpgrowth(self, minSup=0.12, minConf=0.5, visualize=False):
-        self.freqItemSet_fpgrowth, self.rules_fpgrowth = fpgrowth(self.itemSetList, minSupRatio=minSup, minConf=minConf, visualize=visualize)
+    def build_fpgrowth(self, minSup=0.12, minConf=0.5, visualize=False, generate_rule=True):
+        self.freqItemSet_fpgrowth, self.rules_fpgrowth = fpgrowth(self.itemSetList, minSupRatio=minSup, minConf=minConf, visualize=visualize, generate_rule=generate_rule)
         self.rules_fpgrowth = sorted(self.rules_fpgrowth, key=cmp_to_key(lambda item1, item2: item2[2] - item1[2]))
 
     def build_apriori_hash_tree(self, minSup=0.12, minConf=0.5):
