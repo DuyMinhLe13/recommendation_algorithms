@@ -6,6 +6,7 @@
 * `pandas`
 * `os`
 * `zipfile`
+* `bigtree`
 * `tqdm`
 * `itertools`
 * `collections`
